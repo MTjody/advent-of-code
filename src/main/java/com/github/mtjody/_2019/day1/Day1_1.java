@@ -7,9 +7,9 @@ import java.util.stream.Stream;
 
 public class Day1_1 {
     public static void main(String[] args) {
-        String filename = "./input.txt";
+        String fileName = new Day1_2().getClass().getClassLoader().getResource("_2019/day1/input.txt").getFile();
 
-        try (Stream<String> stream = Files.lines(Paths.get(filename))) {
+        try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
             int result = stream.mapToInt(numAsString -> Integer.parseInt(numAsString))
                 .map(num -> num / 3)
                 .map(num -> num - 2)
