@@ -5,9 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-public class Day1_2 {
+public class FuelCalculator_2 {
     public static void main(String[] args) {
-        String fileName = new Day1_2().getClass().getClassLoader().getResource("_2019/day1/input.txt").getFile();
+        String fileName = new FuelCalculator_2().getClass().getClassLoader().getResource("_2019/day1/input.txt").getFile();
 
         try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
             int result = stream.mapToInt(numAsString -> Integer.parseInt(numAsString))
