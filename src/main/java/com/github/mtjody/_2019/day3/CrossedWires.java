@@ -20,7 +20,7 @@ public class CrossedWires {
     private List<String[]> wirePaths;
     private int wireCount;
 
-    public CrossedWires(List<String[]> wirePaths) {
+    CrossedWires(List<String[]> wirePaths) {
         pointToWires = new HashMap<>();
         this.wirePaths = wirePaths;
     }
@@ -41,10 +41,6 @@ public class CrossedWires {
         return wirePaths;
     }
 
-    public void setWirePaths(List<String[]> wirePaths) {
-        this.wirePaths = wirePaths;
-    }
-
     public int calculateClosestDistance(List<Point> intersections) {
         return intersections.stream()
             .filter(point -> point.getX() != 0 && point.getY() != 0)
@@ -59,6 +55,7 @@ public class CrossedWires {
             .stream()
             .filter(entry -> entry.getValue().size() > 1)
             .map(entry -> entry.getKey())
+            .filter(point -> point.getX() != 0 && point.getY() != 0)
             .collect(Collectors.toList());
     }
 
@@ -113,7 +110,7 @@ public class CrossedWires {
             walkPath(path);
         });
         List<Point> intersectionPoints = getIntersectionPoints();
-        if (intersectionPoints == null) throw new IllegalStateException("No intersectionpoints wtf");
+        if (intersectionPoints == null) throw new IllegalStateException("No intersectionpoints :(");
         return calculateClosestDistance(intersectionPoints);
     }
 
