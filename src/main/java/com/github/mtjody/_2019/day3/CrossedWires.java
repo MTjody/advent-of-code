@@ -16,13 +16,16 @@ import java.util.stream.Stream;
 
 public class CrossedWires {
 
-    private Point startingPoint;
     private Map<Point, Set<Integer>> pointToWires;
     private List<String[]> wirePaths;
     private int wireCount;
 
+    public CrossedWires(List<String[]> wirePaths) {
+        pointToWires = new HashMap<>();
+        this.wirePaths = wirePaths;
+    }
+
     public CrossedWires() {
-        startingPoint = new Point(0, 0);
         pointToWires = new HashMap<>();
         wirePaths = new ArrayList<>();
         String fileName = getClass().getClassLoader().getResource("_2019/day3/input.txt").getFile();
@@ -44,12 +47,14 @@ public class CrossedWires {
 
     public int calculateClosestDistance(List<Point> intersections) {
         return intersections.stream()
-            .map(point -> Math.abs(point.getX()) + Math.abs(point.getY())) // starting point is always 0
+            .filter(point -> point.getX() != 0 && point.getY() != 0)
+            // starting point is always 0, no need for -
+            .map(point -> Math.abs(point.getX()) + Math.abs(point.getY()))
             .min(Comparator.naturalOrder())
             .get();
     }
 
-    private List<Point> getIntersectionPoints() {
+    List<Point> getIntersectionPoints() {
         return pointToWires.entrySet()
             .stream()
             .filter(entry -> entry.getValue().size() > 1)
@@ -57,9 +62,7 @@ public class CrossedWires {
             .collect(Collectors.toList());
     }
 
-    private Map<Point, Set<Integer>> walkPath(String[] path) {
-        Set<Point> points = new HashSet<>();
-        points.add(startingPoint);
+    Map<Point, Set<Integer>> walkPath(String[] path) {
 
         Point lastKnownPoint = null;
 
@@ -73,25 +76,23 @@ public class CrossedWires {
             }
             for (int i = 0; i <= stepCount; ++i) {
                 Point point = null;
-                if (direction == "U") {
+                if ("U".equals(direction)) {
                     point = new Point(x, y + i);
-
-                } else if (direction == "D") {
+                } else if ("D".equals(direction)) {
                     point = new Point(x, y - i);
-
-                } else if (direction == "R") {
+                } else if ("R".equals(direction)) {
                     point = new Point(x + i, y);
-
-                } else if (direction == "L") {
+                } else if ("L".equals(direction)) {
                     point = new Point(x - i, y);
-
+                } else {
+                    throw new IllegalStateException("Direction was: " + direction);
                 }
                 lastKnownPoint = point;
-                points.add(point);
                 if (pointToWires.containsKey(point)) {
                     pointToWires.get(point).add(wireCount);
                 } else {
                     Set<Integer> wires = new HashSet<>();
+                    wires.add(wireCount);
                     pointToWires.put(point, wires);
                 }
             }            
@@ -101,20 +102,22 @@ public class CrossedWires {
 
     public static void main(String[] args) {
         CrossedWires cw = new CrossedWires();
-        cw.getWirePaths().forEach(path -> {
-            cw.increaseWireCount();
-            cw.walkPath(path);
+        int distance = cw.getClosestDistance();
+        
+        System.out.println("The manhattan distance from the central point is: " + distance);
+    }
+
+    private Integer getClosestDistance() {
+        getWirePaths().forEach(path -> {
+            increaseWireCount();
+            walkPath(path);
         });
-        List<Point> intersectionPoints = cw.getIntersectionPoints();
-        int distance = cw.calculateClosestDistance(intersectionPoints);
-        System.out.println("The closest point is: " + closestPoint.toString() + " with a distance of: " + distance);
+        List<Point> intersectionPoints = getIntersectionPoints();
+        if (intersectionPoints == null) throw new IllegalStateException("No intersectionpoints wtf");
+        return calculateClosestDistance(intersectionPoints);
     }
 
-    private int calculateManhattanDistance(Point closestPoint) {
-        return 0;
-    }
-
-    private void increaseWireCount() {
+    void increaseWireCount() {
         wireCount++;
     }
 
