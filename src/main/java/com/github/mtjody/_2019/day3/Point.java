@@ -1,5 +1,7 @@
 package com.github.mtjody._2019.day3;
 
+import java.util.Objects;
+
 public class Point {
 
     private int x;
@@ -26,5 +28,15 @@ public class Point {
 
         return this.getX() == otherPoint.getX() 
             && this.getY() == otherPoint.getY();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
+    }
+
+    @Override
+    public String toString() {
+        return "(" + this.getX() + "," + this.getY() + ")";
     }
 }
