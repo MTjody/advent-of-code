@@ -43,7 +43,6 @@ public class CrossedWires {
 
     public int calculateClosestDistance(List<Point> intersections) {
         return intersections.stream()
-            .filter(point -> point.getX() != 0 && point.getY() != 0)
             // starting point is always 0, no need for -
             .map(point -> Math.abs(point.getX()) + Math.abs(point.getY()))
             .min(Comparator.naturalOrder())
@@ -55,7 +54,7 @@ public class CrossedWires {
             .stream()
             .filter(entry -> entry.getValue().size() > 1)
             .map(entry -> entry.getKey())
-            .filter(point -> point.getX() != 0 && point.getY() != 0)
+            .filter(point -> ! (point.getX() == 0 && point.getY() == 0))
             .collect(Collectors.toList());
     }
 
