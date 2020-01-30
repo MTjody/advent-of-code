@@ -16,15 +16,12 @@ public class CrossedWiresTest {
         testInputData.add(firstWire);
         testInputData.add(secondWire);
         CrossedWires cw = new CrossedWires(testInputData);
-        cw.getWirePaths().forEach(path -> {
-            cw.increaseWireCount();
-            cw.walkPath(path);
-        });
+
         List<Point> points = cw.getIntersectionPoints();
         Assert.assertNotNull(points, "Points was null");
         Assert.assertEquals(points.size(), 2, "Wrong amount of intersection points");
 
-        int distance = cw.calculateClosestDistance(points);
+        int distance = cw.getManhattanDistance(points);
         Assert.assertEquals(distance, 6);
     }
 
@@ -36,14 +33,11 @@ public class CrossedWiresTest {
         testInputData.add(firstWire);
         testInputData.add(secondWire);
         CrossedWires cw = new CrossedWires(testInputData);
-        cw.getWirePaths().forEach(path -> {
-            cw.increaseWireCount();
-            cw.walkPath(path);
-        });
+
         List<Point> points = cw.getIntersectionPoints();
         Assert.assertNotNull(points, "Points was null");
 
-        int distance = cw.calculateClosestDistance(points);
+        int distance = cw.getManhattanDistance(points);
         Assert.assertEquals(distance, 159);
     }
 
@@ -55,14 +49,11 @@ public class CrossedWiresTest {
         testInputData.add(firstWire);
         testInputData.add(secondWire);
         CrossedWires cw = new CrossedWires(testInputData);
-        cw.getWirePaths().forEach(path -> {
-            cw.increaseWireCount();
-            cw.walkPath(path);
-        });
+
         List<Point> points = cw.getIntersectionPoints();
         Assert.assertNotNull(points, "Points was null");
 
-        int distance = cw.calculateClosestDistance(points);
+        int distance = cw.getManhattanDistance(points);
         Assert.assertEquals(distance, 135);
     }
     
@@ -74,14 +65,11 @@ public class CrossedWiresTest {
         testInputData.add(firstWire);
         testInputData.add(secondWire);
         CrossedWires cw = new CrossedWires(testInputData);
-        cw.getWirePaths().forEach(path -> {
-            cw.increaseWireCount();
-            cw.walkPath(path);
-        });
+
         List<Point> points = cw.getIntersectionPoints();
         Assert.assertNotNull(points, "Points was null");
     
-        int distance = cw.calculateClosestDistance(points);
+        int distance = cw.getManhattanDistance(points);
         Assert.assertEquals(distance, 651);
     }
 
@@ -93,14 +81,11 @@ public class CrossedWiresTest {
         testInputData.add(firstWire);
         testInputData.add(secondWire);
         CrossedWires cw = new CrossedWires(testInputData);
-        cw.getWirePaths().forEach(path -> {
-            cw.increaseWireCount();
-            cw.walkPath(path);
-        });
+
         List<Point> points = cw.getIntersectionPoints();
         Assert.assertNotNull(points, "Points was null");
     
-        int distance = cw.calculateClosestDistance(points);
+        int distance = cw.getManhattanDistance(points);
         Assert.assertEquals(distance, 1431);
     }
 
@@ -112,14 +97,11 @@ public class CrossedWiresTest {
         testInputData.add(firstWire);
         testInputData.add(secondWire);
         CrossedWires cw = new CrossedWires(testInputData);
-        cw.getWirePaths().forEach(path -> {
-            cw.increaseWireCount();
-            cw.walkPath(path);
-        });
+
         List<Point> points = cw.getIntersectionPoints();
         Assert.assertNotNull(points, "Points was null");
     
-        int distance = cw.calculateClosestDistance(points);
+        int distance = cw.getManhattanDistance(points);
         Assert.assertEquals(distance, 232);
     }
 
@@ -131,14 +113,11 @@ public class CrossedWiresTest {
         testInputData.add(firstWire);
         testInputData.add(secondWire);
         CrossedWires cw = new CrossedWires(testInputData);
-        cw.getWirePaths().forEach(path -> {
-            cw.increaseWireCount();
-            cw.walkPath(path);
-        });
+
         List<Point> points = cw.getIntersectionPoints();
         Assert.assertNotNull(points, "Points was null");
     
-        int distance = cw.calculateClosestDistance(points);
+        int distance = cw.getManhattanDistance(points);
         Assert.assertEquals(distance, 2129);
     }
 
@@ -150,14 +129,11 @@ public class CrossedWiresTest {
         testInputData.add(firstWire);
         testInputData.add(secondWire);
         CrossedWires cw = new CrossedWires(testInputData);
-        cw.getWirePaths().forEach(path -> {
-            cw.increaseWireCount();
-            cw.walkPath(path);
-        });
+
         List<Point> points = cw.getIntersectionPoints();
         Assert.assertNotNull(points, "Points was null");
     
-        int distance = cw.calculateClosestDistance(points);
+        int distance = cw.getManhattanDistance(points);
         Assert.assertEquals(distance, 5319);
     }
 }

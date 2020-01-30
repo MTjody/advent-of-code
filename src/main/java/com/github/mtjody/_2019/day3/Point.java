@@ -6,10 +6,19 @@ public class Point {
 
     private int x;
     private int y;
+    private int distanceTravelled;
 
     public Point(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public int getDistanceTravelled() {
+        return distanceTravelled;
+    }
+
+    public void setDistanceTravelled(int distanceTravelled) {
+        this.distanceTravelled = distanceTravelled;
     }
 
     public int getX() {

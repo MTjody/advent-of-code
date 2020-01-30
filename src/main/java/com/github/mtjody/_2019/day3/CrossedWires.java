@@ -20,9 +20,15 @@ public class CrossedWires {
     private List<String[]> wirePaths;
     private int wireCount;
 
-    CrossedWires(List<String[]> wirePaths) {
-        pointToWires = new HashMap<>();
-        this.wirePaths = wirePaths;
+    public static void main(String[] args) {
+        CrossedWires cw = new CrossedWires();
+        List<Point> intersectionPoints = cw.getIntersectionPoints();
+        if (intersectionPoints == null) throw new IllegalStateException("No intersectionpoints :(");
+
+        int distance = cw.getManhattanDistance(intersectionPoints);
+        System.out.println("The manhattan distance from the central point is: " + distance);
+        int fewestCombinedSteps = cw.getFewestCombinedSteps(intersectionPoints);
+        System.out.println("However, the fewest combined steps is: " + fewestCombinedSteps);
     }
 
     public CrossedWires() {
@@ -32,21 +38,13 @@ public class CrossedWires {
 
         try (Stream<String> lines = Files.lines(Paths.get(fileName))) {
             lines.forEach(line -> wirePaths.add(line.split(",")));
+            wirePaths.forEach(path -> {
+                increaseWireCount();
+                walkPath(path);
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public List<String[]> getWirePaths() {
-        return wirePaths;
-    }
-
-    public int calculateClosestDistance(List<Point> intersections) {
-        return intersections.stream()
-            // starting point is always 0, no need for -
-            .map(point -> Math.abs(point.getX()) + Math.abs(point.getY()))
-            .min(Comparator.naturalOrder())
-            .get();
     }
 
     List<Point> getIntersectionPoints() {
@@ -58,9 +56,35 @@ public class CrossedWires {
             .collect(Collectors.toList());
     }
 
-    Map<Point, Set<Integer>> walkPath(String[] path) {
+    public int getManhattanDistance(List<Point> intersections) {
+        return intersections.stream()
+            // starting point is always 0, no need for -
+            .map(point -> Math.abs(point.getX()) + Math.abs(point.getY()))
+            .min(Comparator.naturalOrder())
+            .get();
+    }
+
+    public int getFewestCombinedSteps(List<Point> intersections) {
+        return intersections.stream()
+            .map(point -> point.getDistanceTravelled())
+            .min(Comparator.naturalOrder())
+            .get();
+    }
+
+    // For testing
+    CrossedWires(List<String[]> wirePaths) {
+        pointToWires = new HashMap<>();
+        this.wirePaths = wirePaths;
+        this.wirePaths.forEach(path -> {
+            increaseWireCount();
+            walkPath(path);
+        });
+    }
+
+    private Map<Point, Set<Integer>> walkPath(String[] path) {
 
         Point lastKnownPoint = null;
+        int stepsFromCenter = 0;
 
         for (String instruction : Arrays.asList(path)) {
             String direction = Character.toString(instruction.charAt(0));
@@ -72,6 +96,7 @@ public class CrossedWires {
             }
             for (int i = 0; i <= stepCount; ++i) {
                 Point point = null;
+                stepsFromCenter++;
                 if ("U".equals(direction)) {
                     point = new Point(x, y + i);
                 } else if ("D".equals(direction)) {
@@ -84,10 +109,15 @@ public class CrossedWires {
                     throw new IllegalStateException("Direction was: " + direction);
                 }
                 lastKnownPoint = point;
+                if (point.getX() == 0 && point.getY() == 0) stepsFromCenter = 0;
+                
                 if (pointToWires.containsKey(point)) {
+                    int distanceTravelled = point.getDistanceTravelled();
+                    point.setDistanceTravelled(stepsFromCenter + distanceTravelled);
                     pointToWires.get(point).add(wireCount);
                 } else {
                     Set<Integer> wires = new HashSet<>();
+                    point.setDistanceTravelled(stepsFromCenter);
                     wires.add(wireCount);
                     pointToWires.put(point, wires);
                 }
@@ -96,24 +126,7 @@ public class CrossedWires {
         return pointToWires;
     }
 
-    public static void main(String[] args) {
-        CrossedWires cw = new CrossedWires();
-        int distance = cw.getClosestDistance();
-        
-        System.out.println("The manhattan distance from the central point is: " + distance);
-    }
-
-    private Integer getClosestDistance() {
-        getWirePaths().forEach(path -> {
-            increaseWireCount();
-            walkPath(path);
-        });
-        List<Point> intersectionPoints = getIntersectionPoints();
-        if (intersectionPoints == null) throw new IllegalStateException("No intersectionpoints :(");
-        return calculateClosestDistance(intersectionPoints);
-    }
-
-    void increaseWireCount() {
+    private void increaseWireCount() {
         wireCount++;
     }
 
