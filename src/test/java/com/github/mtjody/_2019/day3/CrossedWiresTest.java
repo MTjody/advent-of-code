@@ -22,8 +22,19 @@ public class CrossedWiresTest {
         Assert.assertEquals(points.size(), 2, "Wrong amount of intersection points");
 
         int distance = cw.getManhattanDistance(points);
-        Assert.assertEquals(distance, 6);
+        Assert.assertEquals(distance, 6, "Nope");
+
+        int fewestCombinedSteps = cw.getFewestCombinedSteps(points);
+        Assert.assertEquals(fewestCombinedSteps, 30, "Nope");
     }
+
+/*
+    @Test(groups = "bajs")
+    public void testFor() {
+        for (int i = 0; i <= 4; ++i) {
+            System.out.println(i);
+        }   
+    }*/
 
     @Test(groups = "day3")
     public void testExample2() {

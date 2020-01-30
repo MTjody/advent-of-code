@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 public class CrossedWires {
 
     private Map<Point, Set<Integer>> pointToWires;
+    private Map<Point, Integer> pointToSteps;
     private List<String[]> wirePaths;
     private int wireCount;
 
@@ -33,6 +34,7 @@ public class CrossedWires {
 
     public CrossedWires() {
         pointToWires = new HashMap<>();
+        pointToSteps = new HashMap<>();
         wirePaths = new ArrayList<>();
         String fileName = getClass().getClassLoader().getResource("_2019/day3/input.txt").getFile();
 
@@ -66,7 +68,7 @@ public class CrossedWires {
 
     public int getFewestCombinedSteps(List<Point> intersections) {
         return intersections.stream()
-            .map(point -> point.getDistanceTravelled())
+            .map(point -> pointToSteps.get(point))
             .min(Comparator.naturalOrder())
             .get();
     }
@@ -74,6 +76,7 @@ public class CrossedWires {
     // For testing
     CrossedWires(List<String[]> wirePaths) {
         pointToWires = new HashMap<>();
+        pointToSteps = new HashMap<>();
         this.wirePaths = wirePaths;
         this.wirePaths.forEach(path -> {
             increaseWireCount();
@@ -94,7 +97,7 @@ public class CrossedWires {
                 x = lastKnownPoint.getX();
                 y = lastKnownPoint.getY();
             }
-            for (int i = 0; i <= stepCount; ++i) {
+            for (int i = 1; i <= stepCount; i++) {
                 Point point = null;
                 stepsFromCenter++;
                 if ("U".equals(direction)) {
@@ -109,15 +112,18 @@ public class CrossedWires {
                     throw new IllegalStateException("Direction was: " + direction);
                 }
                 lastKnownPoint = point;
+                //System.out.println(String.format("For point %s, direction stepcount %s %s and stepsFromCenter %s", point.toString(), direction, stepCount, stepsFromCenter));
                 if (point.getX() == 0 && point.getY() == 0) stepsFromCenter = 0;
                 
                 if (pointToWires.containsKey(point)) {
-                    int distanceTravelled = point.getDistanceTravelled();
-                    point.setDistanceTravelled(stepsFromCenter + distanceTravelled);
-                    pointToWires.get(point).add(wireCount);
+                    int distanceTravelled = pointToSteps.get(point);
+                    boolean added = pointToWires.get(point).add(wireCount);
+                    if (added) {
+                        pointToSteps.replace(point, stepsFromCenter + distanceTravelled);
+                    }
                 } else {
                     Set<Integer> wires = new HashSet<>();
-                    point.setDistanceTravelled(stepsFromCenter);
+                    pointToSteps.put(point, stepsFromCenter);
                     wires.add(wireCount);
                     pointToWires.put(point, wires);
                 }
