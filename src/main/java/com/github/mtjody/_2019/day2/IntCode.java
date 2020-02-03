@@ -18,8 +18,8 @@ public class IntCode {
     public IntCode() {
         String fileName = getClass().getClassLoader().getResource("_2019/day2/input.txt").getFile();
 
-        try (Stream<String> linesStream = Files.lines(Paths.get(fileName))) {
-            String[] codeList = linesStream.findFirst().get().split(",");
+        try (Stream<String> lines = Files.lines(Paths.get(fileName))) {
+            String[] codeList = lines.findFirst().get().split(",");
 
             setMemory(Arrays.asList(codeList).stream().mapToInt(Integer::valueOf).toArray());
         } catch (IOException e) {

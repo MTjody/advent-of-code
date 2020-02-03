@@ -9,8 +9,8 @@ public class FuelCalculator_2 {
     public static void main(String[] args) {
         String fileName = new FuelCalculator_2().getClass().getClassLoader().getResource("_2019/day1/input.txt").getFile();
 
-        try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
-            int result = stream.mapToInt(numAsString -> Integer.parseInt(numAsString))
+        try (Stream<String> lines = Files.lines(Paths.get(fileName))) {
+            int result = lines.mapToInt(numAsString -> Integer.parseInt(numAsString))
                 .map(num -> calculateFuel(num))
                 .sum();
 
