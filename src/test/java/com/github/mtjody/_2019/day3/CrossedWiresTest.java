@@ -28,14 +28,6 @@ public class CrossedWiresTest {
         Assert.assertEquals(fewestCombinedSteps, 30, "Nope");
     }
 
-/*
-    @Test(groups = "bajs")
-    public void testFor() {
-        for (int i = 0; i <= 4; ++i) {
-            System.out.println(i);
-        }   
-    }*/
-
     @Test(groups = "day3")
     public void testExample2() {
         List<String[]> testInputData = new ArrayList<>();
@@ -50,6 +42,9 @@ public class CrossedWiresTest {
 
         int distance = cw.getManhattanDistance(points);
         Assert.assertEquals(distance, 159);
+
+        int fewestCombinedSteps = cw.getFewestCombinedSteps(points);
+        Assert.assertEquals(fewestCombinedSteps, 610, "Nope");
     }
 
     @Test(groups = "day3")
@@ -66,6 +61,9 @@ public class CrossedWiresTest {
 
         int distance = cw.getManhattanDistance(points);
         Assert.assertEquals(distance, 135);
+
+        int fewestCombinedSteps = cw.getFewestCombinedSteps(points);
+        Assert.assertEquals(fewestCombinedSteps, 410, "Nope");
     }
     
     @Test(groups = "day3")
