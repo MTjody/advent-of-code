@@ -1,5 +1,7 @@
 package com.github.mtjody._2019.day4;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.IntPredicate;
 import java.util.stream.IntStream;
 
@@ -19,12 +21,28 @@ public class SecureContainer {
         return false;
     };
 
-    // digit to right only same or bigger 
+    // two adjacent numbers are the same at least once
+    public static IntPredicate adjacentPartTwo = (number) -> {
+        Map<Character, Integer> numToCount = new HashMap<>();
+        String num = Integer.toString(number);
+
+        for (int i = 1; i < num.length(); i++) {
+            char previous = num.charAt(i - 1);
+            char current = num.charAt(i);
+            if (previous == current) {
+                numToCount.computeIfPresent(current, (key, value) -> ++value);
+                numToCount.putIfAbsent(current, 2);
+            }
+        }
+        return numToCount.values().stream().anyMatch(count -> count == 2);
+    };
+
+    // digit to right only same or bigger
     public static IntPredicate increasingNumbers = (number) -> {
         String num = Integer.toString(number);
         boolean increasesOrSame = true;
-        for (int i = 0; i < num.length(); i++) {
-            if (Integer.valueOf(num.charAt(i - 1)) <= Integer.valueOf(num.charAt(i))) {
+        for (int i = 1; i < num.length(); i++) {
+            if (Integer.valueOf(num.charAt(i - 1)) > Integer.valueOf(num.charAt(i))) {
                 increasesOrSame = false;
             }
         }
@@ -32,13 +50,12 @@ public class SecureContainer {
     };
 
     public static void main(String[] args) {
-
         Long count = IntStream
             .rangeClosed(BOTTOM_RANGE, TOP_RANGE)
             .filter(increasingNumbers)
-            .filter(adjacentNumbers)
+            .filter(adjacentPartTwo)
             .count();
 
         System.out.println("Number of potential matches: " + count);
-    }   
+    }
 }

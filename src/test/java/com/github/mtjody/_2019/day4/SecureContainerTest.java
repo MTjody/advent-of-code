@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static com.github.mtjody._2019.day4.SecureContainer.adjacentNumbers;
+import static com.github.mtjody._2019.day4.SecureContainer.adjacentPartTwo;
 import static com.github.mtjody._2019.day4.SecureContainer.increasingNumbers;
 
 public class SecureContainerTest {
@@ -44,12 +45,27 @@ public class SecureContainerTest {
             .filter(increasingNumbers)
             .toArray();
 
-        Assert.assertEquals(arr.length, 9, "nope");
+        Assert.assertEquals(arr.length, 90, "nope");
     }
 
-    @Test(groups = "day4", description = "Test something")
-    public void test() {
+    @Test(groups = "day4", description = "Test the examples")
+    public void testExamples() {
+        int[] res = IntStream.of(122345, 111123, 135679, 111111, 223450, 123789)
+            .filter(increasingNumbers)
+            .filter(adjacentNumbers)
+            .toArray();
 
+        Assert.assertEquals(res.length, 3);
+    }
+
+    @Test(groups = "day4", description = "Test the examples from part two")
+    public void testExamplesPartTwo() {
+        int[] res = IntStream.of(122345, 123444, 112233, 111122, 111123, 135679, 111111, 223450, 123789)
+            .filter(increasingNumbers)
+            .filter(adjacentPartTwo)
+            .toArray();
+
+        Assert.assertEquals(res.length, 3);
     }
 
 }
