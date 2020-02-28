@@ -8,7 +8,7 @@ const fs = require("fs");
 async function getInput(path) {
     let input;
     try {
-        input = await fs.promises.readFile(path);
+        input = await fs.promises.readFile(path, {encoding: "utf8"});
     } catch (e) {
         console.error(e);
     }

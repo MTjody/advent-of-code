@@ -1,7 +1,5 @@
 const getInput = require("../common/inputReader");
 
-let floor;
-
 /**
  * Gets which floor given a list of directions
  * 
@@ -11,14 +9,38 @@ let floor;
  * @param {Array} directions List of directions
  */
 function getFloor(directions) {
+    let floor = 0;
 
+    directions.forEach(character => {
+        if (character === "(") {
+            floor ++;
+        } else if (character === ")") {
+            floor --;
+        } else {
+            throw new Error("Not recognized", character);
+        }
+    });
+
+    const total = directions.map(paranthesis => {
+        if (paranthesis === "(") {
+            return 1;
+        } else if (paranthesis === ")") {
+            return -1;
+        } else {
+            throw new Error("Not recognized", paranthesis);
+        }
+    })
+    .reduce((previous, current) => {
+        return current = previous + current;
+    }, 0);
+
+    return floor;
 }
 
 async function doTheThing() {
-    const input = await getInput("../../resources/day1/input.txt")
-    console.info("input", input);
-    //const floor = getFloor(input);
-    //console.info("Santa should go to floor", floor);
+    const input = await getInput("2015/resources/day1/input.txt")
+    const floor = getFloor(input);
+    console.info("Santa should go to floor", floor);
 }
 
 doTheThing();
