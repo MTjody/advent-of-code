@@ -4,6 +4,9 @@ target/
 .project
 .settings/
 
+# Node
+node_modules
+
 # VS CODE
 .vscode/
 
