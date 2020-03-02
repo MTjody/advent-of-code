@@ -1,11 +1,24 @@
 const getInput = require("../common/inputReader");
 
-function calculatePaperAmount(dimensions) {
-    let squareFeet = 0;
-    dimensions.forEach(dimension => {
+/**
+ * Reducer for calculating the total square feet given a gift box dimension
+ * 
+ * @param {number} prev The total value
+ * @param {string} curr The dimensions array (e.g. "2x3x4")
+ */
+function toSquareFeet(prev, curr) {    
+    const arr = curr.split("x").map(Number).sort((a,b) => a - b);
+    const l = arr[0];
+    const w = arr[1];
+    const h = arr[2];
+    prev += (l * w) + (2*l*w) + (2*w*h) + (2*h*l);
+    return prev;
+}
 
-    });
-    return squareFeet;
+function calculatePaperAmount(dimensions) {
+    let total = dimensions.reduce(toSquareFeet, 0);
+    console.info("total", total);
+    return total;
 }
 
 function parseInput(input) {
@@ -25,8 +38,10 @@ function parseInput(input) {
 async function doTheThing() {
     const input = await getInput("../../resources/day2/input.txt");
     const parsed = parseInput(input);
-    console.info(parsed);
-    //const squareFeet = calculatePaperAmount(parsed);
+    const squareFeet = calculatePaperAmount(parsed);
+    console.info("They should order", squareFeet, "square feet of wrapping paper.")
 }
 
-doTheThing();
+process.env.NODE_ENV === "test" ? null : doTheThing();
+
+module.exports = { toSquareFeet };
