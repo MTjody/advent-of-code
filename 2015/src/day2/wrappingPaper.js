@@ -17,7 +17,6 @@ function toSquareFeet(prev, curr) {
 
 function calculatePaperAmount(dimensions) {
     let total = dimensions.reduce(toSquareFeet, 0);
-    console.info("total", total);
     return total;
 }
 
@@ -44,4 +43,4 @@ async function doTheThing() {
 
 process.env.NODE_ENV === "test" ? null : doTheThing();
 
-module.exports = { toSquareFeet };
+module.exports = { toSquareFeet, parseInput };
