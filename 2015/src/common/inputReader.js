@@ -1,14 +1,15 @@
 const fs = require("fs");
+const path = require("path");
 
 /**
- * Gets the puzzle input given a path
+ * Gets the puzzle input given a file path
  * 
- * @param {String} path the path to the file to read
+ * @param {String} filePath the file path to the input file
  */
-async function getInput(path) {
+async function getInput(filePath) {
     let input;
     try {
-        input = await fs.promises.readFile(path, {encoding: "utf8"});
+        input = await fs.promises.readFile(path.resolve(__dirname, filePath), {encoding: "utf8"});
     } catch (e) {
         console.error(e);
     }
