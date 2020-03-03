@@ -4,6 +4,10 @@ target/
 .project
 .settings/
 
+# Node
+node_modules
+package-lock.json
+
 # VS CODE
 .vscode/
 
