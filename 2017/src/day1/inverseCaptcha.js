@@ -1,6 +1,6 @@
 'use strict';
 
-const getInput = require("../common/inputReader");
+const { getInput } = require("../common/inputReader");
 
 function getCircularHalfwayIndex(ind, total, digitsToJump) {
     if (ind + digitsToJump < total) {
