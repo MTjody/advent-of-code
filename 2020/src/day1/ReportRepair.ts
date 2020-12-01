@@ -7,7 +7,6 @@ async function main() {
   try {
     res = await Axios.get('https://adventofcode.com/2020/day/1/input', {
       headers: {
-        // TODO env variable
         Cookie: `session=${process.env.SESSION}`,
       },
       withCredentials: true,
