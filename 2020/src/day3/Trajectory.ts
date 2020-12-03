@@ -25,13 +25,15 @@ async function main() {
   const rows: Array<string> = res.data.split('\n');
 
   // Part 1
-  const numTrees = getTrees(rows, 1, 1);
   const numTrees2 = getTrees(rows, 3, 1);
+  // Part 2
+  const numTrees = getTrees(rows, 1, 1);
   const numTrees3 = getTrees(rows, 5, 1);
   const numTrees4 = getTrees(rows, 7, 1);
   const numTrees5 = getTrees(rows, 1, 2);
 
-  console.info('Multiplied', numTrees * numTrees2 * numTrees3 * numTrees4 * numTrees5);
+  console.info('Part 1', numTrees2);
+  console.info('Part 2', numTrees * numTrees2 * numTrees3 * numTrees4 * numTrees5);
 }
 
 export function getTrees(rows: Array<string>, xIncr: number, yIncr: number): number {
@@ -49,12 +51,12 @@ export function getTrees(rows: Array<string>, xIncr: number, yIncr: number): num
       if (row.charAt(x) === Shape.TREE) {
         numTrees++;
       }
+      // Super hacky
     } else if (y % yIncr === 1 && yIncr === 2) {
       x += xIncr;
       if (x >= row.length) {
         x = x % row.length;
       }
-      console.info('looking for a tree in pos x', x, 'for row y', y);
 
       if (row.charAt(x) === Shape.TREE) {
         numTrees++;
