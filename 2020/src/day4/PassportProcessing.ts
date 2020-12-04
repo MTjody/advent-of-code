@@ -76,13 +76,10 @@ async function main() {
     .map((pass) => pass.split('\n').join(' '))
     .filter((pass) => {
       const fields = pass.split(' ');
-      console.info('fields', fields);
       if (fields.length < 7) return false;
       let requiredFields = 0;
       fields.forEach((field) => {
-        console.info('field', field);
         const [key, value] = field.split(':');
-        console.info('key', key);
 
         if (Required.includes(key) && validate(key, value)) requiredFields++;
       });
