@@ -1,7 +1,6 @@
-import { getThreeIndices } from "./ReportRepair"
+import { getThreeIndices } from './ReportRepair';
 
 describe('ReportRepair', () => {
-
   describe('getThreeIndices', () => {
     it('should get three indices matching the test data from aoc', () => {
       const data = ['1721', '979', '366', '299', '675', '1456'];
@@ -10,6 +9,6 @@ describe('ReportRepair', () => {
       expect(indices.includes(i)).toBe(true);
       expect(indices.includes(j)).toBe(true);
       expect(indices.includes(k)).toBe(true);
-    })
-  })
-})
+    });
+  });
+});

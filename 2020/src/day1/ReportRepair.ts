@@ -41,7 +41,7 @@ export function getThreeIndices(data: Array<string>): { i: number; j: number; k:
     for (let j = i; j < data.length; j++) {
       for (let k = i; k < data.length; k++) {
         if (Number(data[i]) + Number(data[j]) + Number(data[k]) === 2020) {
-          console.info('returning', i, j, k);
+          // console.info('returning', i, j, k);
           return { i, j, k };
         }
       }
