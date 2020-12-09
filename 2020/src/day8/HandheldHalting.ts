@@ -70,6 +70,5 @@ export function processProgram(argList: Array<Instruction>): number {
     }
   }
 
-  console.info({ accum });
   return accum;
 }
