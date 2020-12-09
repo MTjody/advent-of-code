@@ -15,4 +15,3 @@ test('Ex 1', () => {
   const accum = processProgram(program);
   expect(accum).toBe(5);
 });
-// test('Ex 2', () => { });
