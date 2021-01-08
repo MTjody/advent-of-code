@@ -18,4 +18,3 @@ test('Ex 1', () => {
   const count = getOccupiedCount(matrix);
   expect(count).toBe(37);
 });
-// test('Ex 2', () => { });

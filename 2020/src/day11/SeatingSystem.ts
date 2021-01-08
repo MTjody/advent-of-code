@@ -46,13 +46,10 @@ export function getOccupiedCount(matrix: string[][]): number {
     occupiedCount = 0;
     indicesToToggle = [];
     for (let outer = 0; outer < matrix.length; outer++) {
-      // console.log(matrix[outer]);
       for (let inner = 0; inner < matrix[outer].length; inner++) {
         const current = matrix[outer][inner];
         if (current === 'L' || current === '#') {
-          // console.info(`getting adjacent for ${current} at matrix[${outer}][${inner}]`);
           const adjacent = getAdjacent(matrix, outer, inner);
-          // console.info('adjacent', adjacent);
           if (current === 'L' && adjacent.occupied === 0) {
             indicesToToggle.push({ row: outer, column: inner });
           }
@@ -65,7 +62,6 @@ export function getOccupiedCount(matrix: string[][]): number {
         }
       }
     }
-    // console.info({ occupiedCount, indicesToToggle });
     indicesToToggle.forEach((index) => {
       const newVal = matrix[index.row][index.column] === '#' ? 'L' : '#';
       matrix[index.row][index.column] = newVal;
@@ -81,11 +77,9 @@ function getAdjacent(matrix: string[][], outer: number, inner: number): { empty:
     for (let j = -1; j < 2; j++) {
       if (!(outer + i === outer && inner + j === inner)) {
         const row = matrix[outer + i];
-        // console.info('checking row', outer + i, row);
         if (row !== undefined) {
           const current = row[inner + j];
 
-          // console.info('checking seat', inner + j, row[inner + j]);
           if (current === 'L') {
             empty++;
           }
