@@ -1,4 +1,3 @@
-import { METHODS } from "http";
 import { getInput } from "./input";
 
 async function main() {
@@ -21,7 +20,7 @@ export function countDepthIncreases(seaFloorDepths: string) {
       count++;
     }
   });
-  console.log('count:', count);
+  //console.log('count:', count);
   return count;
 }
 
@@ -43,7 +42,7 @@ export function countSlidingIncrease(seaFloorDepths: string) {
       count++;
     }
   });
-  console.log('count:', count);
+  //console.log('count:', count);
 
   return count;
 }
